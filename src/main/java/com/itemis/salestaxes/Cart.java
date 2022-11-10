@@ -27,6 +27,15 @@ public class Cart {
     private double totalCost;
 
     /**
+     * Default Constructor
+     * 
+     */
+    public Cart() {
+        this.cartItems = new ArrayList<>();;
+    }
+
+
+    /**
      * Get the value of cartItems
      *
      * @return the value of cartItems
