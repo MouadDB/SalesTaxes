@@ -26,6 +26,8 @@ class Item {
      * Product Price
      */
     private double price;
+    
+    private double cost;
 
     /**
      * Product Quantity
@@ -104,6 +106,24 @@ class Item {
      */
     public void setPrice(double price) {
         this.price = price;
+    }
+    
+    /**
+     * Get the value of cost
+     *
+     * @return the value of cost
+     */
+    public double getCost() {
+        return cost;
+    }
+
+    /**
+     * Set the value of cost
+     *
+     * @param cost new value of cost
+     */
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 
     /**
