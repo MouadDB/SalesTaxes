@@ -26,7 +26,7 @@ class Item {
      * Product Price
      */
     private double price;
-    
+
     private double cost;
 
     /**
@@ -107,7 +107,7 @@ class Item {
     public void setPrice(double price) {
         this.price = price;
     }
-    
+
     /**
      * Get the value of cost
      *
@@ -120,10 +120,9 @@ class Item {
     /**
      * Set the value of cost
      *
-     * @param cost new value of cost
      */
-    public void setCost(double cost) {
-        this.cost = cost;
+    public void setCost() {
+        this.cost = this.quantity * (this.salesTaxes + this.getPrice());
     }
 
     /**
@@ -179,7 +178,7 @@ class Item {
     public void setTaxable(boolean taxable) {
         this.taxable = taxable;
     }
-    
+
     /**
      * Get the value of salesTaxes
      *
