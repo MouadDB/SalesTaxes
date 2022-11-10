@@ -65,10 +65,11 @@ public class Cart {
     /**
      * Set the value of totalTax
      *
-     * @param totalTax new value of totalTax
      */
-    public void setTotalTax(double totalTax) {
-        this.totalTax = totalTax;
+    public void setTotalTax() {
+        double sum = 0;
+        sum = this.cartItems.stream().map((item) -> item.getSalesTaxes()).reduce(sum, (accumulator, _item) -> accumulator + _item);
+        this.totalTax = sum;
     }
 
     /**
@@ -83,10 +84,11 @@ public class Cart {
     /**
      * Set the value of totalCost
      *
-     * @param totalCost new value of totalCost
      */
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
+    public void setTotalCost() {
+        double sum = 0;
+        sum = this.cartItems.stream().map((item) -> item.getCost()).reduce(sum, (accumulator, _item) -> accumulator + _item);
+        this.totalCost = sum;;
     }
 
 }
