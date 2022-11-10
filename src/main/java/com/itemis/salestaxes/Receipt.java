@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * @author Mouad Douieb
  */
-public class Receipt {
+public final class Receipt {
 
     /**
      * Order array list
@@ -18,15 +18,37 @@ public class Receipt {
     private ArrayList<Map<String, Object>> order = new ArrayList<Map<String, Object>>();
 
     /**
+     * Cart object
+     */
+    private Cart cart;
+
+    /**
+     * Total Sales tax
+     */
+    private double totalSalesTax;
+
+    /**
+     * Total receipt price
+     */
+    private double totalPrice;
+
+    /**
      * Non Taxable Goods list
      */
-    private String[] nonTaxableGoods = new String[]{
+    private String[] nonTaxableGoods = {
         "book",
         "chocolate"
     };
 
     public Receipt() {
+        
+        this.cart = new Cart();
+        
+        // Step 1: Get the order
         getOrder();
+        
+        // Step 2: Process the order
+        processOrder();
     }
 
     /**
@@ -67,6 +89,9 @@ public class Receipt {
                     orderItem.put("name", name);
                     orderItem.put("price", price);
                     orderItem.put("type", type);
+
+                    this.order.add(orderItem);
+
                 }
 
             }
@@ -74,6 +99,30 @@ public class Receipt {
             sc.close();
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Process user order, Adding item to cart and calculating taxes and total
+     *
+     */
+    public void processOrder() {
+
+        for (Map<String, Object> orderItem : order) {
+
+            // Add product as Book type
+            if (orderItem.get("type").equals("book")) {
+                Book item = new Book(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), false);
+                cart.getCartItems().add(item);
+            } // Add product as Food type
+            else if (orderItem.get("type").equals("chocolate")) {
+                Food item = new Food(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), false);
+                cart.getCartItems().add(item);
+            } // Any other product
+            else {
+                Others item = new Others(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), false);
+                cart.getCartItems().add(item);
+            }
         }
     }
 
@@ -87,7 +136,7 @@ public class Receipt {
             System.out.printf(orderItem.toString() + "\n");
         }
 
-        System.out.printf("\nSales Tax: %.2f \n", 0.00);
-        System.out.println("Total: " + 0.00);
+        System.out.printf("\nSales Tax: %.2f \n", totalSalesTax);
+        System.out.println("Total: " + totalPrice);
     }
 }
