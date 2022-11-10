@@ -5,7 +5,7 @@ package com.itemis.salestaxes;
  *
  * @author Mouad Douieb
  */
-class Item {
+public abstract class Item {
 
     /**
      * The Default Tax rate for goods
