@@ -17,7 +17,6 @@ class Item {
      */
     private static final double INTIAL_IMPORT_DUTY_RATE = 0.05;
 
-    
     /**
      * Product name
      */
@@ -44,6 +43,11 @@ class Item {
     private boolean taxable = true;
 
     /**
+     * Sales Taxes
+     */
+    private double salesTaxes = 0;
+
+    /**
      * Default Constructor
      */
     public Item() {
@@ -53,17 +57,17 @@ class Item {
 
     /**
      * Item parameterized constructor
-     * 
+     *
      * @param name
      * @param price
      * @param quantity
-     * @param taxable 
+     * @param taxable
      */
     public Item(String name, double price, int quantity, boolean taxable) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.taxable = taxable;
+        this.taxable = taxable = 0;
     }
 
     /**
@@ -155,7 +159,24 @@ class Item {
     public void setTaxable(boolean taxable) {
         this.taxable = taxable;
     }
+    
+    /**
+     * Get the value of salesTaxes
+     *
+     * @return the value of salesTaxes
+     */
+    public double getSalesTaxes() {
+        return salesTaxes;
+    }
 
+    /**
+     * Set the value of salesTaxes
+     *
+     * @param salesTaxes new value of salesTaxes
+     */
+    public void setSalesTaxes(double salesTaxes) {
+        this.salesTaxes = salesTaxes;
+    }
 
     /**
      * Get the value of INTIAL_IMPORT_DUTY_RATE
