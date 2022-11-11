@@ -21,7 +21,13 @@ public class Others extends Item {
 
     @Override
     public void calculateSalesTaxes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double salesTaxes = (this.getPrice() * this.getINTIAL_TAX_RATE_FOR_GOODS());
+        if(isImported()){
+            salesTaxes += (this.getPrice() * this.getINTIAL_IMPORT_DUTY_RATE());
+        }
+
+        salesTaxes = (Math.round(salesTaxes * 50) / 50.0);
+        this.setSalesTaxes(salesTaxes);
     }
 
 }
