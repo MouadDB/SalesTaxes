@@ -37,7 +37,8 @@ public final class Receipt {
      */
     private String[] nonTaxableGoods = {
         "book",
-        "chocolate"
+        "chocolate",
+        "pills"
     };
 
     public Receipt() {
@@ -89,7 +90,11 @@ public final class Receipt {
 
                     double price = Double.parseDouble(line.substring(indexOfAt + 4));
 
-                    boolean imported = (words[1].equals("imported")) ? true : false;
+                    String[] importedWords = {
+                        "imported"
+                    };
+
+                    boolean imported = (Utils.ContainsItemsInArray(line, importedWords) == "imported") ? true : false;
 
                     Map<String, Object> orderItem = new HashMap<>();
 
@@ -127,6 +132,10 @@ public final class Receipt {
             else if (orderItem.get("type").equals("chocolate")) {
                 Food item = new Food(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), (boolean) orderItem.get("imported"));
                 cart.getCartItems().add(item);
+            } // Add Medical products
+            else if (orderItem.get("type").equals("pills")) {
+                Medical item = new Medical(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), (boolean) orderItem.get("imported"));
+                cart.getCartItems().add(item);
             } // Any other product
             else {
                 Others item = new Others(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), (boolean) orderItem.get("imported"));
@@ -135,17 +144,25 @@ public final class Receipt {
         }
     }
 
+    @Override
+    public String toString() {
+
+        String output = new String();
+
+        for (Item cartItem : cart.getCartItems()) {
+            output += String.format("%s: %.2f \n", cartItem.getName(), cartItem.getCost());
+        }
+
+        output += String.format("\nSales Tax: %.2f \n", totalSalesTax);
+        output += String.format("Total: " + totalPrice);
+        return output;
+    }
+
     /**
      * Print Receipt cart list, Sales Tax and Total
      *
      */
     public void printReceipt() {
-
-        for (Item cartItem : cart.getCartItems()) {
-            System.out.printf("%s: %.2f \n", cartItem.getName(), cartItem.getCost());
-        }
-
-        System.out.printf("\nSales Tax: %.2f \n", totalSalesTax);
-        System.out.println("Total: " + totalPrice);
+        System.out.println(this.toString());
     }
 }
