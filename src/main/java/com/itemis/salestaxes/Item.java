@@ -63,13 +63,13 @@ public abstract class Item {
      * @param name
      * @param price
      * @param quantity
-     * @param taxable
+     * @param imported
      */
-    public Item(String name, double price, int quantity, boolean taxable) {
+    public Item(String name, double price, int quantity, boolean imported) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.taxable = taxable;
+        this.imported = imported;
     }
 
     
