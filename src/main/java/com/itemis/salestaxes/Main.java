@@ -6,7 +6,9 @@ package com.itemis.salestaxes;
  */
 public class Main {
     public static void main(String[] args) {
+        
         Receipt receipt = new Receipt();
+        receipt.startOrder();
         receipt.printReceipt();
     }
 }

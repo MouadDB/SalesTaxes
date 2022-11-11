@@ -50,14 +50,19 @@ public final class Receipt {
      */
     private String filename = "";
 
-    public Receipt(String filename) {
-
+    public void setFilename(String filename) {
         this.filename = filename;
+    }
 
+    public Receipt() {
+
+    }
+
+    public void startOrder() {
         this.cart = new Cart();
 
-        // Step 1: Get the order
-        getOrder();
+        // Step 1: Process Inputs
+        processInputs();
 
         // Step 2: Process the order
         processOrder();
@@ -69,27 +74,24 @@ public final class Receipt {
         totalPrice = cart.getTotalCost();
     }
 
-    public Receipt() {
-        Receipt receipt = new Receipt("");
-    }
-
     /**
      * Get user input from console and process it
      *
      */
-    public void getOrder() {
+    public void processInputs() {
 
         Scanner sc;
 
         try {
             // Scan user inputs
-            if (filename.length() > 0) {
+            if (this.filename.length() > 0) {
                 File file = new File(filename);
                 sc = new Scanner(file);
             } else {
                 sc = new Scanner(System.in);
+                System.out.println("### INPUT:");
+
             }
-            System.out.println("### INPUT:");
 
             while (sc.hasNextLine()) {
 
@@ -178,7 +180,7 @@ public final class Receipt {
 
         String output = new String();
 
-        for (Item cartItem : cart.getCartItems()) {
+        for (Item cartItem : this.cart.getCartItems()) {
 
             String isImportedString = (cartItem.isImported()) ? "imported " : "";
             output += String.format("%d %s%s: %.2f\n", cartItem.getQuantity(), isImportedString, cartItem.getName(), cartItem.getCost());
@@ -186,6 +188,7 @@ public final class Receipt {
 
         output += String.format("Sales Taxes: %.2f\n", totalSalesTax);
         output += String.format("Total: " + totalPrice);
+        output += "\n";
         return output;
     }
 
@@ -194,6 +197,6 @@ public final class Receipt {
      *
      */
     public void printReceipt() {
-        System.out.println(this.toString());
+        System.out.print(this.toString());
     }
 }
