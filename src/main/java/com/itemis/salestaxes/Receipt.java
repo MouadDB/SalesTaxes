@@ -1,9 +1,13 @@
 package com.itemis.salestaxes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Represents receipt calculated
@@ -41,7 +45,14 @@ public final class Receipt {
         "pills"
     };
 
-    public Receipt() {
+    /**
+     * To read the order form file
+     */
+    private String filename = "";
+
+    public Receipt(String filename) {
+
+        this.filename = filename;
 
         this.cart = new Cart();
 
@@ -58,17 +69,28 @@ public final class Receipt {
         totalPrice = cart.getTotalCost();
     }
 
+    public Receipt() {
+        Receipt receipt = new Receipt("");
+    }
+
     /**
      * Get user input from console and process it
      *
      */
     public void getOrder() {
 
-        // Scan user inputs
-        Scanner sc = new Scanner(System.in);
-        System.out.println("### INPUT:");
+        Scanner sc;
 
         try {
+            // Scan user inputs
+            if (filename.length() > 0) {
+                File file = new File(filename);
+                sc = new Scanner(file);
+            } else {
+                sc = new Scanner(System.in);
+            }
+            System.out.println("### INPUT:");
+
             while (sc.hasNextLine()) {
 
                 String line = sc.nextLine();
@@ -87,10 +109,10 @@ public final class Receipt {
                     int indexOfAt = line.indexOf(" at");
 
                     String name = line.substring(0, indexOfAt);
-                    
+
                     // Remove quantity and imported from product name
                     name = name.replaceAll("\\d+\\s", "");
-                    
+
                     name = name.replaceAll("imported ", "");
 
                     double price = Double.parseDouble(line.substring(indexOfAt + 4));
@@ -118,6 +140,8 @@ public final class Receipt {
             sc.close();
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Receipt.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -155,7 +179,7 @@ public final class Receipt {
         String output = new String();
 
         for (Item cartItem : cart.getCartItems()) {
-            
+
             String isImportedString = (cartItem.isImported()) ? "imported " : "";
             output += String.format("%d %s%s: %.2f\n", cartItem.getQuantity(), isImportedString, cartItem.getName(), cartItem.getCost());
         }
