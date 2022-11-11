@@ -89,12 +89,15 @@ public final class Receipt {
 
                     double price = Double.parseDouble(line.substring(indexOfAt + 4));
 
+                    boolean imported = (words[1].equals("imported")) ? true : false;
+
                     Map<String, Object> orderItem = new HashMap<>();
 
-                    orderItem.put("quantity", quantity);
                     orderItem.put("name", name);
+                    orderItem.put("quantity", quantity);
                     orderItem.put("price", price);
                     orderItem.put("type", type);
+                    orderItem.put("imported", imported);
 
                     this.order.add(orderItem);
 
@@ -118,15 +121,15 @@ public final class Receipt {
 
             // Add product as Book type
             if (orderItem.get("type").equals("book")) {
-                Book item = new Book(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), false);
+                Book item = new Book(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), (boolean) orderItem.get("imported"));
                 cart.getCartItems().add(item);
             } // Add product as Food type
             else if (orderItem.get("type").equals("chocolate")) {
-                Food item = new Food(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), false);
+                Food item = new Food(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), (boolean) orderItem.get("imported"));
                 cart.getCartItems().add(item);
             } // Any other product
             else {
-                Others item = new Others(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), false);
+                Others item = new Others(orderItem.get("name").toString(), (double) orderItem.get("price"), (int) orderItem.get("quantity"), (boolean) orderItem.get("imported"));
                 cart.getCartItems().add(item);
             }
         }
@@ -138,8 +141,8 @@ public final class Receipt {
      */
     public void printReceipt() {
 
-        for (Map<String, Object> orderItem : order) {
-            System.out.printf(orderItem.toString() + "\n");
+        for (Item cartItem : cart.getCartItems()) {
+            System.out.printf("%s: %.2f \n", cartItem.getName(), cartItem.getCost());
         }
 
         System.out.printf("\nSales Tax: %.2f \n", totalSalesTax);
