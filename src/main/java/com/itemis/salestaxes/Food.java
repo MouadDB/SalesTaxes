@@ -17,6 +17,11 @@ public class Food extends Item {
     public Food(String name, double price, int quantity,  boolean isImported) {
         super(name, price, quantity, isImported);
     }
+
+    @Override
+    public void calculateSalesTaxes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

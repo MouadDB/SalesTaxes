@@ -72,6 +72,9 @@ public abstract class Item {
         this.taxable = taxable;
     }
 
+    
+    public abstract void calculateSalesTaxes();
+
     /**
      * Get the value of name
      *
