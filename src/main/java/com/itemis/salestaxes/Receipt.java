@@ -87,6 +87,11 @@ public final class Receipt {
                     int indexOfAt = line.indexOf(" at");
 
                     String name = line.substring(0, indexOfAt);
+                    
+                    // Remove quantity and imported from product name
+                    name = name.replaceAll("\\d+\\s", "");
+                    
+                    name = name.replaceAll("imported ", "");
 
                     double price = Double.parseDouble(line.substring(indexOfAt + 4));
 
@@ -150,10 +155,12 @@ public final class Receipt {
         String output = new String();
 
         for (Item cartItem : cart.getCartItems()) {
-            output += String.format("%s: %.2f \n", cartItem.getName(), cartItem.getCost());
+            
+            String isImportedString = (cartItem.isImported()) ? "imported " : "";
+            output += String.format("%d %s%s: %.2f\n", cartItem.getQuantity(), isImportedString, cartItem.getName(), cartItem.getCost());
         }
 
-        output += String.format("\nSales Tax: %.2f \n", totalSalesTax);
+        output += String.format("Sales Taxes: %.2f\n", totalSalesTax);
         output += String.format("Total: " + totalPrice);
         return output;
     }
