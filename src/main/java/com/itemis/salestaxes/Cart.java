@@ -1,5 +1,6 @@
 package com.itemis.salestaxes;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * @author Mouad Douieb
  */
 public class Cart {
-
+    
     /**
      * Cart Items list
      */
@@ -88,7 +89,8 @@ public class Cart {
     public void setTotalCost() {
         double sum = 0;
         sum = this.cartItems.stream().map((item) -> item.getCost()).reduce(sum, (accumulator, _item) -> accumulator + _item);
-        this.totalCost = sum;;
+        
+        this.totalCost = Utils.round(sum, 2);
     }
 
     public void calculateTax() {
