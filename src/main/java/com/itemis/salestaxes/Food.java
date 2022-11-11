@@ -23,10 +23,10 @@ public class Food extends Item {
         if(super.isImported()){
             
             // Add import tax duty to all imported products
-            double salesTaxes = super.getSalesTaxes() + (super.getPrice()* this.getINTIAL_IMPORT_DUTY_RATE());
-            
+            double salesTaxes = (super.getSalesTaxes() + (super.getPrice() * this.getINTIAL_IMPORT_DUTY_RATE()));
+
             // rounded up to the nearest 0.05
-            salesTaxes = (Math.round(salesTaxes * 20) / 20.0);
+            salesTaxes = Utils.roundToFive(salesTaxes);
             this.setSalesTaxes(salesTaxes);
         }
     }

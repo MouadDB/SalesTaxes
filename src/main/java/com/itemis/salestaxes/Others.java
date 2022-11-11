@@ -28,7 +28,8 @@ public class Others extends Item {
             
         }
 
-        salesTaxes = (Math.round(salesTaxes * 20) / 20.0);
+        // rounded up to the nearest 0.05
+        salesTaxes = Utils.roundToFive(salesTaxes);
         this.setSalesTaxes(salesTaxes);
     }
 
