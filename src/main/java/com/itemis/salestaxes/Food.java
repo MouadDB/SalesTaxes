@@ -26,7 +26,7 @@ public class Food extends Item {
             double salesTaxes = super.getSalesTaxes() + (super.getPrice()* this.getINTIAL_IMPORT_DUTY_RATE());
             
             // rounded up to the nearest 0.05
-            salesTaxes = (Math.round(salesTaxes * 50) / 50.0);
+            salesTaxes = (Math.round(salesTaxes * 20) / 20.0);
             this.setSalesTaxes(salesTaxes);
         }
     }

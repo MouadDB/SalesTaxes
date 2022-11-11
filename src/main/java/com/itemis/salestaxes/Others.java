@@ -23,10 +23,12 @@ public class Others extends Item {
     public void calculateSalesTaxes() {
         double salesTaxes = (this.getPrice() * this.getINTIAL_TAX_RATE_FOR_GOODS());
         if(isImported()){
+            
             salesTaxes += (this.getPrice() * this.getINTIAL_IMPORT_DUTY_RATE());
+            
         }
 
-        salesTaxes = (Math.round(salesTaxes * 50) / 50.0);
+        salesTaxes = (Math.round(salesTaxes * 20) / 20.0);
         this.setSalesTaxes(salesTaxes);
     }
 
