@@ -91,4 +91,15 @@ public class Cart {
         this.totalCost = sum;;
     }
 
+    public void calculateTax() {
+        this.getCartItems().stream().map((item) -> {
+
+            item.calculateSalesTaxes();
+            return item;
+        }).forEachOrdered((item) -> {
+            item.setCost();
+        });
+        this.setTotalTax();
+        this.setTotalCost();
+    }
 }

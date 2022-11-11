@@ -41,14 +41,20 @@ public final class Receipt {
     };
 
     public Receipt() {
-        
+
         this.cart = new Cart();
-        
+
         // Step 1: Get the order
         getOrder();
-        
+
         // Step 2: Process the order
         processOrder();
+
+        // Step 3: Calculate Taxes
+        this.cart.calculateTax();
+
+        totalSalesTax = cart.getTotalTax();
+        totalPrice = cart.getTotalCost();
     }
 
     /**
